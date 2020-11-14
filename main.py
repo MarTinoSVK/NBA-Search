@@ -26,7 +26,7 @@ def main():
     elif sys.argv[1] == "data":
         os.system('python3 visualize.py')
     else:
-        print("ERROR: Invalid Arguments")
+        print("ERROR: Invalid Arguments!")
         printHelp()
 
 
