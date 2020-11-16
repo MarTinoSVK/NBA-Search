@@ -2,6 +2,8 @@ import unittest
 import random
 from datetime import date
 from modules import analysis, scraper
+from mock import Mock
+import test
 
 
 # Test cases for Analysis API 
@@ -118,6 +120,7 @@ class TestScraper(unittest.TestCase):
         
         for adv_stat in adv_stats:
             self.assertTrue(adv_stat in adv_stats)
+			
 
 if __name__ == '__main__':
     unittest.main()

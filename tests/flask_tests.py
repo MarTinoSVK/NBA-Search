@@ -1,5 +1,5 @@
 import unittest
-from preprocess import funnel_name
+import preprocess
 from app import app
 
 # Test case for data preprocess
@@ -9,8 +9,23 @@ class TestPreprocess(unittest.TestCase):
     def test_get_random_player_names(self):
         names = ["Bud Acton", "Gary Alexander", "Steven Adams"]
         for i in range(3):
-            player_name = funnel_name(names[i])
+            player_name = preprocess.funnel_name(names[i])
             self.assertTrue(player_name in ' '.join(names))
+			
+    def test_generate_rank_queries(self): 
+        rank_queries = preprocess.generate_rank_queries(1500)
+        self.assertIsInstance(rank_queries, list)
+        self.assertIsInstance(rank_queries[0], str)
+	
+    def test_generate_stat_queries(self): 
+        stat_queries = preprocess.generate_stat_queries(1500)
+        self.assertIsInstance(stat_queries, list)
+        self.assertIsInstance(stat_queries[0], str)
+	
+    def test_generate_info_queries(self): 
+        info_queries = preprocess.generate_info_queries(1500)
+        self.assertIsInstance(info_queries, list)
+        self.assertIsInstance(info_queries[0], str)
 
 # Test cases for URL routing
 class TestRouting(unittest.TestCase):

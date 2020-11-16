@@ -33,7 +33,12 @@ class TestStatNode(unittest.TestCase):
         node = StatNode()
         val = node.get_player_stat("Kobe Bryant", "true shooting percentage")
         self.assertTrue(isinstance(val, float))
-
+	
+    def test_generate_random_response(self):
+        node = StatNode()
+        val = node.generate_random_response("true shooting percentage","Kobe Bryant", 0.54)
+        self.assertIsInstance(val, str)
+		
 # Test cases for rank node
 class TestRankNode(unittest.TestCase):
 
@@ -94,6 +99,13 @@ class TestRankNode(unittest.TestCase):
             random_stat = random.choice(stats)
             stat = node.get_stat(random_name, random_stat)
             self.assertTrue(isinstance(stat, float))
+			
+    def test_response(self):
+        query = "Who is a better shooter Kobe Bryant or Lebron James?"
+        node = RankNode()
+        node.load_query(query)
+        resp = node.response()
+        self.assertTrue(isinstance(resp, str))
 
 # Test cases for info node
 class TestInfoNode(unittest.TestCase):
@@ -160,7 +172,23 @@ class TestInferenceNetwork(unittest.TestCase):
         node_type = handler.node_type
         response = handler.response()
         self.assertEqual(node_type, "stat")  # Making sure it gets wrongly classified as stat
-        self.assertIn(response, {non_nba, unsure})   
+        self.assertIn(response, {non_nba, unsure})  
+		
+    def test_correct_rank_classification(self):
+        query = "Who is a better shooter Kobe Bryant or Lebron James?"
+        handler = InferenceNetwork(query)
+        node_type = handler.node_type
+        response = handler.response()
+        self.assertEqual(node_type, "rank")
+        self.assertNotIn(response, {non_nba, unsure})
+	
+    def test_correct_stat_classification(self):
+        query = "What is Kobe Bryant's shooting percentage??"
+        handler = InferenceNetwork(query)
+        node_type = handler.node_type
+        response = handler.response()
+        self.assertEqual(node_type, "stat")
+        self.assertNotIn(response, {non_nba, unsure}) 
 
 if __name__ == '__main__':
     unittest.main()
