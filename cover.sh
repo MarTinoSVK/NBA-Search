@@ -1,1 +1,0 @@
-coverage erase && coverage run -a --source=.,data,inference,lab,modules,tests,static  -m unittest tests/flask_tests.py && coverage run -a --source=.,data,inference,lab,modules,tests,static  -m unittest tests/module_tests.py && coverage run -a --source=.,data,inference,lab,modules,tests,static -m unittest tests/inference_tests.py && coverage report -m && coverage html
